@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 
 abstract class Conta implements ITaxas{
 
@@ -9,7 +10,7 @@ abstract class Conta implements ITaxas{
 
     protected double limite;
 
-    private Operacao[] operacoes;
+    private LinkedList<Operacao> operacoes;
 
     private int numOperacoes;
 
@@ -21,7 +22,7 @@ abstract class Conta implements ITaxas{
         this.saldo = saldo;
         this.limite = limite;
 
-        this.operacoes = new Operacao[1000];
+        this.operacoes = new LinkedList<Operacao>();
         this.numOperacoes = 0;
 
         Conta.totalContas++;
@@ -30,7 +31,7 @@ abstract class Conta implements ITaxas{
     public boolean depositar(double valor) {
         if (this.numOperacoes < 1000) {
 
-            this.operacoes[numOperacoes] = new OperacaoDeposito(valor);
+            this.operacoes.add(numOperacoes, new OperacaoDeposito(valor));
             this.numOperacoes++;
             this.saldo += valor;
             return true;
@@ -45,7 +46,7 @@ abstract class Conta implements ITaxas{
         if (this.numOperacoes < 1000) {
 
             if (valor > 0.0 && valor <= this.limite) {
-                this.operacoes[numOperacoes] = new OperacaoSaque(valor);
+                this.operacoes.add(numOperacoes, new OperacaoSaque(valor));
                 this.numOperacoes++;
                 this.saldo -= valor;
                 return true;
