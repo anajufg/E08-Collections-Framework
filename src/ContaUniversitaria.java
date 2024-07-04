@@ -3,6 +3,7 @@ public class ContaUniversitaria extends Conta {
         super(numero, dono, saldo, limite);
     }
 
+    @Override
     public boolean setLimite(double limite){
         if (limite < 0 || limite > 500) {
             this.limite = 0;
@@ -14,6 +15,7 @@ public class ContaUniversitaria extends Conta {
         }
     }
 
+    @Override
     public double calculaTaxas() {
         return 0;
     }
