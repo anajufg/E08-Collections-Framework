@@ -1,44 +1,44 @@
 import java.util.Date;
 
-public class PessoaJuridica extends Cliente {
+public class PessoaFisica extends Cliente {
 
-    private String cnpj;
+    private String cpf;
 
-    private int numFuncionarios;
+    private int idade;
 
-    private String setor;
+    private char genero;
 
-    public PessoaJuridica(String nome, String endereco, Date data, String cnpj, int numFuncionarios, String setor) {
+    public PessoaFisica(String nome, String endereco, Date data, String cpf, int idade, char genero) {
         super(nome, endereco, data);
-        this.cnpj = cnpj;
-        this.numFuncionarios = numFuncionarios;
-        this.setor = setor;
+        this.cpf = cpf;
+        this.idade = idade;
+        this.genero = genero;
     }
 
     @Override
     public boolean autenticar(String chave) {
-        return chave.equals(this.cnpj);
+        return chave.equals(this.cpf);
     }
 
     @Override
     public String toString() {
-        String str = "--------------- PJ ---------------" +
-                "Nome: " + this.getNome() +
-                "Data: " + this.getData() +
-                "Endereco: " + this.getEndereco() +
-                "CNPJ: " + cnpj +
-                "Número de Funcionários: " + numFuncionarios +
-                "Setor: " + setor +
+        String str = "--------------- PF ---------------\n" +
+                "Nome: " + this.getNome() + "\n" +
+                "Data: " + this.getData() + "\n" +
+                "Endereco: " + this.getEndereco() + "\n" +
+                "CPF:" + cpf + "\n" +
+                "Idade:" + idade + "\n" +
+                "Genero:" + genero + "\n" +
                 "----------------------------------";
         return str;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof PessoaJuridica) {
-            PessoaJuridica objPJ = (PessoaJuridica) obj;
+        if(obj instanceof PessoaFisica) {
+            PessoaFisica objPF = (PessoaFisica) obj;
 
-            if(this.cnpj.equals(objPJ.cnpj)) {
+            if(this.cpf.equals(objPF.cpf)) {
                 return true;
             } else {
                 return false;
@@ -46,29 +46,5 @@ public class PessoaJuridica extends Cliente {
         } else {
             return false;
         }
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public int getNumFuncionarios() {
-        return numFuncionarios;
-    }
-
-    public void setNumFuncionarios(int numFuncionarios) {
-        this.numFuncionarios = numFuncionarios;
-    }
-
-    public String getSetor() {
-        return setor;
-    }
-
-    public void setSetor(String setor) {
-        this.setor = setor;
     }
 }
