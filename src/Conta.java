@@ -1,4 +1,5 @@
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
 
 abstract class Conta implements ITaxas{
 
@@ -10,9 +11,7 @@ abstract class Conta implements ITaxas{
 
     protected double limite;
 
-    private LinkedList<Operacao> operacoes;
-
-    private int numOperacoes;
+    private ArrayList<Operacao> operacoes;
 
     private static int totalContas = 0;
 
@@ -22,71 +21,46 @@ abstract class Conta implements ITaxas{
         this.saldo = saldo;
         this.limite = limite;
 
-        this.operacoes = new LinkedList<Operacao>();
-        this.numOperacoes = 0;
-
+        this.operacoes = new ArrayList<>();
         Conta.totalContas++;
     }
 
-    public boolean depositar(double valor) {
-        if (this.numOperacoes < 1000) {
-
-            this.operacoes.add(numOperacoes, new OperacaoDeposito(valor));
-            this.numOperacoes++;
-            this.saldo += valor;
-            return true;
-
-        } else {
-            System.out.println("<Numero máximo de operações atingido>");
-            return false;
-        }
+    public void depositar(double valor) {
+        this.saldo += valor;
+        this.operacoes.add(new OperacaoDeposito(valor));
     }
 
     public boolean sacar(double valor) {
-        if (this.numOperacoes < 1000) {
-
-            if (valor > 0.0 && valor <= this.limite) {
-                this.operacoes.add(numOperacoes, new OperacaoSaque(valor));
-                this.numOperacoes++;
-                this.saldo -= valor;
-                return true;
-            } else {
-                return false;
-            }
-
+        if (valor > 0.0 && valor <= this.limite) {
+            this.operacoes.add(new OperacaoSaque(valor));
+            this.saldo -= valor;
+            return true;
         } else {
-            System.out.println("<Numero máximo de operações atingido>");
             return false;
         }
     }
 
     public boolean transferir(Conta contaDestino, double valor) {
-        boolean saqueRealizado = this.sacar(valor);
-
-        if (saqueRealizado) {
-            boolean depositoRealizado = contaDestino.depositar(valor);
-            if (depositoRealizado) {
-                return true;
-            } else {
-                System.out.print("<Não foi possível realizar a transferência>");
-                this.depositar(valor);
-                return false;
-            }
+        if (this.sacar(valor)) {
+            contaDestino.depositar(valor);
+            return true;
         } else {
             System.out.print("<Não foi possível realizar a transferência>");
             return false;
         }
     }
 
+    @Override
     public String toString() {
         String str = "=========== Conta " + this.numero + " ===========\n" +
                 this.dono.toString() + "\n" +
                 "Saldo: " + this.saldo + "\n" +
                 "Limite: " + this.limite + "\n" +
-                "===================================\n";
+                "==================================\n";
         return str;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if(obj instanceof Conta) {
             Conta objConta = (Conta) obj;
@@ -101,14 +75,28 @@ abstract class Conta implements ITaxas{
         }
     }
 
-    public void imprimirExtrato() {
-        System.out.println("=========== Extrato Conta " + this.numero + " ===========");
-        for(Operacao atual : this.operacoes) {
-            if (atual != null) {
-                System.out.println(atual.toString());
+    public void imprimirExtrato(int ordenacao) {
+        if (ordenacao == 1) {
+            System.out.println("=========== Extrato Conta " + this.numero + " ===========");
+            for (Operacao atual : this.operacoes) {
+                if (atual != null) {
+                    System.out.println(atual.toString());
+                }
             }
+            System.out.println("==========================================\n");
+        } else if (ordenacao == 2) {
+            Collections.sort(operacoes);
+
+            System.out.println("=========== Extrato Conta " + this.numero + " ===========");
+            for (Operacao atual : this.operacoes) {
+                if (atual != null) {
+                    System.out.println(atual.toString());
+                }
+            }
+            System.out.println("==========================================\n");
+        } else {
+            System.out.println("<Ordenação Inválida>");
         }
-        System.out.println("==========================================\n");
     }
 
     public void imprimirExtratoTaxas() {
