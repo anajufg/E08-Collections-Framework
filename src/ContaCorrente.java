@@ -4,6 +4,7 @@ public class ContaCorrente extends Conta {
         super(numero, dono, saldo, limite);
     }
 
+    @Override
     public boolean setLimite(double limite){
         if (limite < -100) {
             this.limite = 0;
@@ -15,6 +16,7 @@ public class ContaCorrente extends Conta {
         }
     }
 
+    @Override
     public double calculaTaxas() {
         if(getDono() instanceof PessoaFisica) {
             return 10;
