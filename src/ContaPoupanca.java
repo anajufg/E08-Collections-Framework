@@ -3,6 +3,7 @@ public class ContaPoupanca extends Conta {
         super(numero, dono, saldo, limite);
     }
 
+    @Override
     public boolean setLimite(double limite){
         if (limite < 100 || limite > 1000) {
             this.limite = 0;
@@ -14,6 +15,7 @@ public class ContaPoupanca extends Conta {
         }
     }
 
+    @Override
     public double calculaTaxas() {
         return 0;
     }
