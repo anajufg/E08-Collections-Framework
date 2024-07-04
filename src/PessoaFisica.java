@@ -1,6 +1,3 @@
-
-import com.sun.org.apache.xerces.internal.dom.AbortException;
-
 import java.util.Date;
 
 public class PessoaFisica extends Cliente {
@@ -18,10 +15,12 @@ public class PessoaFisica extends Cliente {
         this.genero = genero;
     }
 
+    @Override
     public boolean autenticar(String chave) {
         return chave.equals(this.cpf);
     }
 
+    @Override
     public String toString() {
         String str = "--------------- PF ---------------\n" +
                 "Nome: " + this.getNome() + "\n" +
@@ -34,6 +33,7 @@ public class PessoaFisica extends Cliente {
         return str;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if(obj instanceof PessoaFisica) {
             PessoaFisica objPF = (PessoaFisica) obj;
