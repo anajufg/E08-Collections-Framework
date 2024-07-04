@@ -29,7 +29,8 @@ public class Main {
 
 
         System.out.println(conta1.toString());
-        conta1.imprimirExtrato();
+        conta1.imprimirExtrato(1);
+        conta1.imprimirExtrato(2);
 
         conta1.setLimite(1001);
         conta2.setLimite(-100);
