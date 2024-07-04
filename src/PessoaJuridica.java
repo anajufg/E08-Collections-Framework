@@ -15,10 +15,12 @@ public class PessoaJuridica extends Cliente {
         this.setor = setor;
     }
 
+    @Override
     public boolean autenticar(String chave) {
         return chave.equals(this.cnpj);
     }
 
+    @Override
     public String toString() {
         String str = "--------------- PJ ---------------" +
                 "Nome: " + this.getNome() +
@@ -31,6 +33,7 @@ public class PessoaJuridica extends Cliente {
         return str;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if(obj instanceof PessoaJuridica) {
             PessoaJuridica objPJ = (PessoaJuridica) obj;
